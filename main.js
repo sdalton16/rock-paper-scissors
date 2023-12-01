@@ -9,15 +9,14 @@ let winner;
 // scissors = 3
 
 
-// assign computer choice by randomly generate number between 1 and 3
+// Randomly assign computer choice for each round, called in round function
 const getCompSelection = function () {
     let comp_selection = 0;
     comp_selection = Math.floor(Math.random() * 3) + 1;
     return comp_selection;
 }
 
-// prompt user for choice as text, assign user choice based on input  
-// to number between 1 and 3 
+// Prompts user for their selection for each round, called in round function
 const getUserSelection = function () {
     user_selection = prompt('Rock, Paper, or Scissors? ');
 
@@ -40,8 +39,8 @@ const getUserSelection = function () {
     return user_selection;
 }
 
-// Call functions to get competer and user choice, evaluate winner,
-// and return winner or call function again if round is a tie
+// Evaluates each round and returns winner or calls iteself if tie, called
+// game function
 const round = function () {
     comp_selection = getCompSelection();
     user_selection = getUserSelection();
@@ -88,8 +87,7 @@ const round = function () {
     }
 }
 
-// Call round function to play as many rounds as necessary until competer
-// or user has 3 wins (best of five series)
+// primary function to run game
 const game = function () {
     let comp_score = 0;
     let user_score = 0;
