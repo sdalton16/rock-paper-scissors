@@ -8,14 +8,17 @@ let winner;
 // paper = 2
 // scissors = 3
 
-const getCompChoice = function () {
+
+// assign computer choice by randomly generate number between 1 and 3
+const getCompSelection = function () {
     let comp_selection = 0;
     comp_selection = Math.floor(Math.random() * 3) + 1;
     return comp_selection;
 }
 
+// prompt user for choice as text, assign user choice based on input  
+// to number between 1 and 3 
 const getUserSelection = function () {
-    let user_selection = 0;
     user_selection = prompt('Rock, Paper, or Scissors? ');
 
     if (user_selection.toLowerCase() === 'rock') {
@@ -31,14 +34,16 @@ const getUserSelection = function () {
     }
 
     else {
-        return getUserChoice();
+        return getUserSelection();
     }
 
     return user_selection;
 }
 
+// Call functions to get competer and user choice, evaluate winner,
+// and return winner or call function again if round is a tie
 const round = function () {
-    comp_selection = getCompChoice();
+    comp_selection = getCompSelection();
     user_selection = getUserSelection();
 
     if (comp_selection === 1 && user_selection === 3) {
@@ -83,22 +88,24 @@ const round = function () {
     }
 }
 
+// Call round function to play as many rounds as necessary until competer
+// or user has 3 wins (best of five series)
 const game = function () {
-    let comp_wins = 0;
-    let user_wins = 0;
+    let comp_score = 0;
+    let user_score = 0;
 
     for (i = 0; i < 5; i++) {
         winner = round();
         if (winner === 0) {
-            comp_wins++;
-            if (comp_wins === 3) {
+            comp_score++;
+            if (comp_score === 3) {
                 return console.log('Computer wins game :(')
             }
         }
 
         else if (winner === 1) {
-            user_wins++;
-            if (user_wins === 3) {
+            user_score++;
+            if (user_score === 3) {
                 return console.log('User wins game :)')
             }
         }
