@@ -8,9 +8,15 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div id="prescreen">
+        <p>Well, well, well... who do we have here?</p>
+        <input placeholder="Player name" autofocus id="user" type="text" name="user">
+        <button type="submit" id="user_name_submit">It is I.</button>
+    </div>
     <div id="main">
         <h1 id="title">Rock-Paper-Scissors</h1>
-        <p id="instruct">Choose your character:</p>
+        <p id="game_descript">First to 5 wins...</p>
+        <p id="instruct">Select your first move to start the game:</p>
         <div id="buttons">
             <button id="rock">Rock</button>
             <button id="paper">Paper</button>
@@ -18,13 +24,16 @@
         </div>
         <div id="result">Waiting...</div>
         <div id="scoreboard">
-            <div>Player: <span id="user_score">0</span></div>
-            <div>Computer: <span id="comp_score">0</span></div>
-        </div>
-        <div id="game_over">
-            <p id="game_result"></p>
-            <button id="restart">Play again?</button>
+            <div id="user_scoreboard"><p id="player_name"></p><span id="user_score"> 0</span></div>
+            <div id="comp_scoreboard">Computer: <span id="comp_score"> 0</span></div>
         </div>
     </div>
+    <div id="game_over">
+        <p id="game_result"></p>
+        <button id="restart">Play again?</button>
+    </div>
+    <footer>
+        <p>Sheamus Dalton 2023</p>
+    </footer>
 </body>
 </html>

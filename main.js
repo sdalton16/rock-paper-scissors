@@ -1,9 +1,11 @@
 let comp_selection;
 let user_selection;
-let winner = 3;
+
 const rock = document.querySelector('#rock');
 const paper = document.querySelector('#paper');
 const scissors = document.querySelector('#scissors');
+const instruct = document.querySelector('#instruct');
+
 let user_score = document.querySelector('#user_score');
 let comp_score = document.querySelector('#comp_score');
 let user_counter = 0;
@@ -12,6 +14,25 @@ let comp_counter = 0;
 const main = document.querySelector('#main');
 const game_result = document.querySelector('#game_result');
 const restart = document.querySelector('#restart');
+const game_over = document.querySelector('#game_over');
+
+const prescreen = document.querySelector('#prescreen');
+let user_name = document.querySelector('#user');
+const player_name = document.querySelector('#player_name');
+const user_name_submit = document.querySelector('#user_name_submit');
+
+user_name_submit.addEventListener('click', () => {
+    user_name = user_name.value;
+    
+    if (user_name === '') {
+        user_name = 'Player';
+    }
+
+    player_name.textContent = user_name + ':';
+    main.scrollIntoView();
+    prescreen.remove();
+});
+
 game_result.hidden = true;
 restart.hidden = true;
 
@@ -37,21 +58,11 @@ scissors.addEventListener('click', () => {
 // paper = 2
 // scissors = 3
 
-// Randomly assign computer choice for each round, called in round function
-const getCompSelection = function () {
-    let comp_selection = 0;
-    comp_selection = Math.floor(Math.random() * 3) + 1;
-    return comp_selection;
-}
-
-// Evaluates each round and returns winner or calls iteself if tie, called
-// in game function
 const round = function (user_selection) {
     comp_selection = getCompSelection();
+    instruct.textContent = 'Next move:';
 
     if (comp_selection === 1 && user_selection === 3) {
-        winner = 0;
-        console.log('Computer wins round - Rock beats scissors :(');
         result.textContent = 'Computer wins round - Rock beats scissors :(';
         comp_counter += 1;
         comp_score.textContent = comp_counter;
@@ -59,8 +70,6 @@ const round = function (user_selection) {
     }
 
     else if (comp_selection === 2 && user_selection === 1) {
-        winner = 0;
-        console.log('Computer wins round - Paper beats rock :(');
         result.textContent = 'Computer wins round - Paper beats rock :(';
         comp_counter += 1;
         comp_score.textContent = comp_counter;
@@ -68,8 +77,6 @@ const round = function (user_selection) {
     }
 
     else if (comp_selection === 3 && user_selection === 2) {
-        winner = 0;
-        console.log('Computer wins round - Scissors beats paper :(');
         result.textContent = 'Computer wins round - Scissors beats paper :(';
         comp_counter += 1;
         comp_score.textContent = comp_counter;
@@ -77,43 +84,41 @@ const round = function (user_selection) {
     }
 
     else if (user_selection === 1 && comp_selection === 3) {
-        winner = 1;
-        console.log('User wins round - Rock beats scissors :)');
-        result.textContent = 'User wins round - Rock beats scissors :)';
+        result.textContent = `${user_name} wins round - Rock beats scissors :)`;
         user_counter += 1;
         user_score.textContent = user_counter;
         return checkForWinner();
     }
 
     else if (user_selection === 2 && comp_selection === 1) {
-        winner = 1;
-        console.log('User wins round - Paper beats rock :)');
-        result.textContent = 'User wins round - Paper beats rock :)';
+        result.textContent = `${user_name} wins round - Paper beats rock :)`;
         user_counter += 1;
         user_score.textContent = user_counter;
         return checkForWinner();
     }
 
     else if (user_selection === 3 && comp_selection === 2) {
-        winner = 1;
-        console.log('User wins round - Scissors beats paper :)');
-        result.textContent = 'User wins round - Scissors beats paper :)';
+        result.textContent = `${user_name} wins round - Scissors beats paper :)`;
         user_counter += 1;
         user_score.textContent = user_counter;
         return checkForWinner();
     }
 
     else if (user_selection === comp_selection) {
-        console.log('Tie...Play Again');
         result.textContent = 'Tie...Play Again';
         return round();
     }
 }
 
-const checkForWinner = function () {
+const getCompSelection = function () {
+    comp_selection = Math.floor(Math.random() * 3) + 1;
+    return comp_selection;
+}
 
+const checkForWinner = function () {
     if (comp_counter === 5 || user_counter === 5) {
-        main.hidden = true;
+        main.remove();
+        game_over.classList.add('game_over');
 
         if (comp_counter === 5) {
             game_result.hidden = false;
@@ -121,7 +126,7 @@ const checkForWinner = function () {
             comp_counter = 0;
             user_counter = 0;
             game_result.textContent = 'Computer wins game :(';
-            return 'Game over - comp win';
+            return console.log('Game over - comp win');
         }
 
         if (user_counter === 5) {
@@ -129,10 +134,9 @@ const checkForWinner = function () {
             restart.hidden = false;
             comp_counter = 0;
             user_counter = 0;
-            game_result.textContent = 'Computer wins game :(';
-            return 'Game over - user win';
+            game_result.textContent = `${user_name} wins game :)`;
+            return console.log('Game over - user win');
         }
-        return 'Continue game';
     };
-    return 'Continue game';
+    return console.log(`Continue game - Comp: ${comp_counter} / User: ${user_counter}`);
 };
